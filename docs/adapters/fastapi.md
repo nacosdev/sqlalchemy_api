@@ -62,14 +62,17 @@ If you are running this app without a previos FastAPI instalation, you will also
 pip install sqlalchemy-api[fastapi]
 ```
 
-- Run the app:
+### Run it
 
 ```bash
 uvicorn main:app --reload
 ```
 
+### Use it
 
 All the [CRUD](/sqlalchemy_api/crud/introduction) endpoints are now available at [http://localhost:8000/user](http://localhost:8000/user) and the OpenAPI documentation at [http://localhost:8000/docs](http://localhost:8000/docs):
+
+
 
 
 

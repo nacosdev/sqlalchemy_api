@@ -48,6 +48,8 @@ nav:
     - Introduction: 'adapters/introduction.md'
     - Starlette: 'adapters/starlette.md'
     - Fastapi: 'adapters/fastapi.md'
+  - Auth:
+    - Introduction: 'auth/introduction.md'
 
 markdown_extensions:
   - markdown.extensions.codehilite:
