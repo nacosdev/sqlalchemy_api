@@ -88,8 +88,7 @@ sqlalchemy = ["1.4", "2.0"]
 test = "coverage run -a --concurrency=thread,greenlet -m pytest {args}"
 cov = [
   "coverage report -m --show-missing --skip-covered --fail-under=95",
-  "coverage xml",
-  "{args}",
+  "coverage html --show-contexts {args}",
 ]
 
 [tool.hatch.envs.lint]
