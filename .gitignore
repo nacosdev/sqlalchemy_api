@@ -19,3 +19,4 @@ test.db
 coverage.xml
 .ruff_cache/
 site/
+coverage/

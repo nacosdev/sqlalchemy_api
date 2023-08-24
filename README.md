@@ -20,7 +20,7 @@
 SQLAlchemy API is a library that helps to turn the [SQLAlchemy](https://www.sqlalchemy.org/) models into a REST API. It uses the power of [Pydantic 2](https://docs.pydantic.dev/dev-v2/), to validate and serialize the data. This is a framework-agnostic library that can be used with any web framework. Currently, it provides support for [Starlette](https://www.starlette.io/) and [FastAPI](https://fastapi.tiangolo.com/).
 
 ---
-**Documentation**: <a href="https://github.com/nacosdev/sqlalchemy_api" target="_blank">https://github.com/nacosdev/sqlalchemy_api</a>
+**Documentation**: <a href="https://nacosdev.github.io/sqlalchemy_api" target="_blank">https://nacosdev.github.io/sqlalchemy_api</a>
 ---
 
 **Table of Contents**
