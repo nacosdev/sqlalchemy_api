@@ -14,6 +14,9 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11"]
+        database-uri: 
+          - "sqlite:///testing.db?check_same_thread=False"
+          - "postgresql+psycopg2://username:password@localhost:5432/test_db"
 
     services:
       postgres:
@@ -35,23 +38,16 @@ jobs:
         run: pip install hatch
       - name: "Run linting checks"
         run: hatch run lint:check
-      - name: "Build package & docs"
+      - name: "Build package"
         run: |
           hatch build
-          hatch run docs:build
-      - name: "Run tests with SQLite"
+      - run: mkdir coverage
+      - name: "Run tests"
         env:
-          TEST_DATABASE_URI: "sqlite:///testing.db?check_same_thread=False"
+          TEST_DATABASE_URI: ${{ matrix.database-uri }}
+          COVERAGE_FILE: coverage/.coverage.${{ runner.os }}-${{ matrix.database-uri }}-py${{ matrix.python-version }}
+          CONTEXT: ${{ runner.os }}-${{ matrix.database-uri }}-py${{ matrix.python-version }}
         run: hatch run test:test
-      - name: "Run tests with PostgreSQL"
-        env:
-          TEST_DATABASE_URI: "postgresql+psycopg2://username:password@localhost:5432/test_db"
-        run: hatch run test:test
-      - name: "Enforce coverage"
-        run: hatch run test:cov --title "Coverage for ${{ github.sha }}"
-        env:
-          COVERAGE_FILE: coverage/.coverage.${{ runner.os }}-py${{ matrix.python-version }}
-          CONTEXT: ${{ runner.os }}-py${{ matrix.python-version }}
       - name: Store coverage files
         uses: actions/upload-artifact@v3
         with:
