@@ -48,7 +48,7 @@ jobs:
           TEST_DATABASE_URI: "postgresql+psycopg2://username:password@localhost:5432/test_db"
         run: hatch run test:test
       - name: "Enforce coverage"
-      - run: hatch run test:cov --title "Coverage for ${{ github.sha }}"
+        run: hatch run test:cov --title "Coverage for ${{ github.sha }}"
       - name: Store coverage HTML
         uses: actions/upload-artifact@v3
         with:
