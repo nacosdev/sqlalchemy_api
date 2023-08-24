@@ -6,8 +6,8 @@
   <a href="https://github.com/nacosdev/sqlalchemy_api/actions?query=workflow%3ATests+event%3Apush+branch%3Amain" target="_blank">
       <img src="https://github.com/nacosdev/sqlalchemy_api/workflows/Tests/badge.svg?event=push&branch=main" alt="Test">
   </a>
-  <a href="https://coverage-badge.samuelcolvin.workers.dev/redirect/nacosdev/sqlalchemy_api" target="_blank">
-      <img src="https://coverage-badge.samuelcolvin.workers.dev/nacosdev/sqlalchemy_api.svg" alt="Coverage">
+  <a href="https://codecov.io/gh/nacosdev/sqlalchemy_api">
+      <img src="https://codecov.io/gh/nacosdev/sqlalchemy_api/branch/main/graph/badge.svg" alt="Coverage">
   </a>
   <a href="https://pypi.org/project/sqlalchemy-api" target="_blank">
       <img src="https://img.shields.io/pypi/v/sqlalchemy-api?color=%2334D058&label=pypi%20package" alt="Package version">
