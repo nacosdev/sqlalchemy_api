@@ -6,17 +6,19 @@ on:
   pull_request:
     branches: ["main"]
 
+
+
 jobs:
   tests:
-    name: "Python ${{ matrix.python-version }}"
+    name: "Python ${{ matrix.python-version }} - ${{ matrix.database-schema }}"
     runs-on: "ubuntu-latest"
 
     strategy:
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11"]
-        database-uri: 
-          - "sqlite:///testing.db?check_same_thread=False"
-          - "postgresql+psycopg2://username:password@localhost:5432/test_db"
+        database-schema: 
+          - "sqlite"
+          - "postgresql"
 
     services:
       postgres:
@@ -42,11 +44,18 @@ jobs:
         run: |
           hatch build
       - run: mkdir coverage
+      - name: Set postgres database URI
+        if: matrix.database-schema == 'postgresql'
+        run: |
+          echo "TEST_DATABASE_URI=postgresql+psycopg2://username:password@localhost:5432/test_db" >> $GITHUB_ENV
+      - name: Set sqlite database URI
+        if: matrix.database-schema == 'sqlite'
+        run: |
+          echo "TEST_DATABASE_URI=sqlite:///test_db.sqlite" >> $GITHUB_ENV
       - name: "Run tests"
         env:
-          TEST_DATABASE_URI: ${{ matrix.database-uri }}
-          COVERAGE_FILE: coverage/.coverage.${{ runner.os }}-${{ matrix.database-uri }}-py${{ matrix.python-version }}
-          CONTEXT: ${{ runner.os }}-${{ matrix.database-uri }}-py${{ matrix.python-version }}
+          COVERAGE_FILE: coverage/.coverage.${{ runner.os }}-${{ matrix.database-schema }}-py${{ matrix.python-version }}
+          CONTEXT: ${{ runner.os }}-${{ matrix.database-schema }}-py${{ matrix.python-version }}
         run: hatch run test:test
       - name: Store coverage files
         uses: actions/upload-artifact@v3
