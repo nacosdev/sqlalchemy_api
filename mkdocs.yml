@@ -1,0 +1,82 @@
+site_name: SQLAlchemy API
+site_description: API operations for SQLAlchemy models.
+site_url: https://nacosdev.dev/sqlalchemy_api
+
+theme:
+  name: 'material'
+  logo: assets/images/logo_white.png
+  palette:
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+      # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+  features:
+  - search.suggest
+  - search.highlight
+  - content.tabs.link
+  - navigation.indexes
+  - content.tooltips
+  - navigation.path
+  - content.code.annotate
+  - content.code.copy
+  - content.code.select
+
+repo_name: nacosdev/sqlalchemy_api
+repo_url: https://github.com/nacosdev/sqlalchemy_api
+edit_uri: ""
+
+nav:
+  - Introduction: 'index.md'
+  - CRUD:
+    - Introduction: 'crud/introduction.md'
+    - Create: 'crud/create.md'
+    - Read: 'crud/read.md'
+    - Update: 'crud/update.md'
+    - Delete: 'crud/delete.md'
+    - Validation and Serialization: 'crud/validation.md'
+  - Adapters:
+    - Introduction: 'adapters/introduction.md'
+    - Starlette: 'adapters/starlette.md'
+    - Fastapi: 'adapters/fastapi.md'
+
+markdown_extensions:
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - admonition
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.tabbed
+  - pymdownx.superfences
+
+watch:
+  - sqlalchemy_api/
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            show_root_heading: true
+            show_source: false
+
+extra:
+  analytics:
+    provider: google
+    property: G-MZ23FY2X6T
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/nacosdev
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/nacosdev
