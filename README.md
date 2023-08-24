@@ -1,5 +1,5 @@
 <p align="center">
-  <a><img src="docs/assets/images/sqlalchemy_api.png" alt="SQLalchemyAPI"></a>
+  <a><img src="https://raw.githubusercontent.com/nacosdev/sqlalchemy_api/main/docs/assets/images/sqlalchemy_api.png" alt="SQLalchemyAPI"></a>
 </p>
 
 <p align="center">
@@ -104,25 +104,25 @@ uvicorn main:app --reload
 Endpoints are automatically generated for the defined models and the FastAPI adapter provides automatic Swagger documentation, you can access [localhost:8000/docs](localhost:8000/docs) to interact with them:
 
 <p align="center">
-  <a><img src="docs/assets/images/swagger-1.png" alt="Swagger"></a>
+  <a><img src="https://raw.githubusercontent.com/nacosdev/sqlalchemy_api/main/docs/assets/images/swagger-1.png" alt="Swagger"></a>
 </p>
 
 SQLAlchemyAPI also provides different operators depending on the column data type, to filter the data:
 
 <p align="center">
-  <a><img src="docs/assets/images/swagger-2.png" alt="Swagger2"></a>
+  <a><img src="https://raw.githubusercontent.com/nacosdev/sqlalchemy_api/main/docs/assets/images/swagger-2.png" alt="Swagger2"></a>
 </p>
 
 The data returned is automatically paginated and serialized, including the relationships defined in the models:
 
 <p align="center">
-  <a><img src="docs/assets/images/swagger-3.png" alt="Swagger3"></a>
+  <a><img src="https://raw.githubusercontent.com/nacosdev/sqlalchemy_api/main/docs/assets/images/swagger-3.png" alt="Swagger3"></a>
 </p>
 
 Post data is automatically validated and serialized using Pydantic, for example, if you try to create a user wihout the required `age` field, you will get an error like this:
 
 <p align="center">
-  <a><img src="docs/assets/images/swagger-4.png" alt="Swagger4"></a>
+  <a><img src="https://raw.githubusercontent.com/nacosdev/sqlalchemy_api/main/docs/assets/images/swagger-4.png" alt="Swagger4"></a>
 </p>
 
 ## License

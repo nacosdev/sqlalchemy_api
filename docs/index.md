@@ -1,4 +1,4 @@
-<img src="assets/images/sqlalchemy_api.png"/>
+<img src="https://raw.githubusercontent.com/nacosdev/sqlalchemy_api/main/docs/assets/images/sqlalchemy_api.png"/>
 
 SQLAlchemy API is a library that helps to turn the [SQLAlchemy](https://www.sqlalchemy.org/) models into a REST API. It uses the power of [Pydantic 2](https://docs.pydantic.dev/dev-v2/), to validate the data and serialize it.
 

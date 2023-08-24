@@ -81,10 +81,11 @@ jobs:
         with:
           name: coverage
           path: coverage
+      - run: pip install coverage[toml]
       - run: ls -la coverage
-      - name: "Install dependencies"
-        run: pip install hatch
-      - run: hatch run test:cov-combine --title "Coverage for ${{ github.sha }}"
+      - run: coverage combine coverage
+      - run: coverage report
+      - run: coverage html --show-contexts --title "Coverage for ${{ github.sha }}"
       - name: Store coverage HTML
         uses: actions/upload-artifact@v3
         with:

@@ -90,11 +90,6 @@ cov = [
   "coverage report -m --show-missing --skip-covered --fail-under=95",
   "coverage xml",
 ]
-cov-combine = [
-  "coverage combine coverage",
-  "coverage report",
-  "coverage html --show-contexts {args}",
-]
 
 [tool.hatch.envs.lint]
 detached = true
