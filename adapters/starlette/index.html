@@ -487,6 +487,33 @@
     APICrud
   </a>
   
+    <nav class="md-nav" aria-label="APICrud">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-example" class="md-nav__link">
+    Basic example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-it" class="md-nav__link">
+    Run it
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-it" class="md-nav__link">
+    Use it
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -506,6 +533,59 @@
     <li class="md-nav__item">
       <a href="../fastapi/" class="md-nav__link">
         Fastapi
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          Auth
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Auth
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../auth/introduction/" class="md-nav__link">
+        Introduction
       </a>
     </li>
   
@@ -547,6 +627,33 @@
     APICrud
   </a>
   
+    <nav class="md-nav" aria-label="APICrud">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-example" class="md-nav__link">
+    Basic example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-it" class="md-nav__link">
+    Run it
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-it" class="md-nav__link">
+    Use it
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -567,6 +674,7 @@
   <h1>Starlette</h1>
 
 <h2 id="apicrud">APICrud</h2>
+<h3 id="basic-example">Basic example</h3>
 <p>Let's create a simple SQLAlchemy model:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">starlette.routing</span> <span class="kn">import</span> <span class="n">Mount</span>
 <span class="kn">from</span> <span class="nn">starlette.applications</span> <span class="kn">import</span> <span class="n">Starlette</span>
@@ -628,10 +736,47 @@
 <p>If you are running this app without a previos Starlette instalation, you will also need an ASGI server and Starlette to be able to run this app, both are optional dependencies of SQLAlchemy API:</p>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>sqlalchemy-api<span class="o">[</span>asgi<span class="o">]</span>
 </code></pre></div>
-<p>Run the app:</p>
+<h3 id="run-it">Run it</h3>
 <div class="highlight"><pre><span></span><code>uvicorn<span class="w"> </span>main:app<span class="w"> </span>--reload
 </code></pre></div>
 <p>All the <a href="/sqlalchemy_api/crud/introduction">CRUD</a> endpoints are now available at <a href="http://localhost:8000/user/">http://localhost:8000/user/</a>:</p>
+<h3 id="use-it">Use it</h3>
+<p>Endpoints are automatically generated for the defined model, you can use the following endpoints to interact with them:</p>
+<ul>
+<li>Create: <code>POST localhost:8000/user</code>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s1">&#39;http://localhost:8000/user/&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">  &quot;name&quot;: &quot;foo&quot;</span>
+<span class="s1">}&#39;</span>
+</code></pre></div></li>
+<li>Get Many: <code>GET localhost:8000/user</code>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s1">&#39;http://localhost:8000/user/?page_size=100&amp;page=1&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept: application/json&#39;</span>
+</code></pre></div></li>
+<li>Get One: <code>GET localhost:8000/user/{id}</code>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s1">&#39;http://localhost:8000/user/1&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept: application/json&#39;</span>
+</code></pre></div></li>
+<li>Update: <code>PUT localhost:8000/user/{id}</code>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span><span class="s1">&#39;PUT&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s1">&#39;http://localhost:8000/user/1&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">  &quot;name&quot;: &quot;bar&quot;</span>
+<span class="s1">}&#39;</span>
+</code></pre></div></li>
+<li>Delete: <code>DELETE localhost:8000/user/{id}</code>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span><span class="s1">&#39;DELETE&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s1">&#39;http://localhost:8000/user/1&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept: application/json&#39;</span>
+</code></pre></div></li>
+</ul>
 
 
   

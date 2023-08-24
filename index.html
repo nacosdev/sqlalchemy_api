@@ -329,6 +329,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    License
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -555,6 +562,59 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          Auth
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Auth
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="auth/introduction/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -627,6 +687,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    License
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -644,9 +711,37 @@
 
   <h1>Introduction</h1>
 
-<p><img src="assets/images/sqlalchemy_api.png"/></p>
-<p>SQLAlchemy API is a library that helps to turn the <a href="https://www.sqlalchemy.org/">SQLAlchemy</a> models into a REST API. It uses the power of <a href="https://docs.pydantic.dev/dev-v2/">Pydantic 2</a>, to validate the data and serialize it.</p>
-<p>This is intended to be a framework-agnostic library that can be used with any web framework. Currently, it provides support for <a href="https://www.starlette.io/">Starlette</a> and <a href="https://fastapi.tiangolo.com/">FastAPI</a>.</p>
+<p align="center">
+  <a><img src="https://raw.githubusercontent.com/nacosdev/sqlalchemy_api/main/docs/assets/images/sqlalchemy_api.png" alt="SQLalchemyAPI"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/nacosdev/sqlalchemy_api/actions?query=workflow%3ATests+event%3Apush+branch%3Amain" target="_blank">
+      <img src="https://github.com/nacosdev/sqlalchemy_api/workflows/Tests/badge.svg?event=push&branch=main" alt="Test">
+  </a>
+  <a href="https://codecov.io/gh/nacosdev/sqlalchemy_api">
+      <img src="https://codecov.io/gh/nacosdev/sqlalchemy_api/branch/main/graph/badge.svg" alt="Coverage">
+  </a>
+  <a href="https://pypi.org/project/sqlalchemy-api" target="_blank">
+      <img src="https://img.shields.io/pypi/v/sqlalchemy-api?color=%2334D058&label=pypi%20package" alt="Package version">
+  </a>
+  <a href="https://pypi.org/project/sqlalchemy-api" target="_blank">
+      <img src="https://img.shields.io/pypi/pyversions/fastapi.svg?color=%2334D058" alt="Supported Python versions">
+  </a>
+</p>
+
+<p>SQLAlchemy API is a library that helps to turn the <a href="https://www.sqlalchemy.org/">SQLAlchemy</a> models into a REST API, allowing all the basic CRUD operations. It uses the power of <a href="https://docs.pydantic.dev/dev-v2/">Pydantic 2</a>, to validate and serialize the data. This is a framework-agnostic library that can be used with any web framework. Currently, it provides support for <a href="https://www.starlette.io/">Starlette</a> and <a href="https://fastapi.tiangolo.com/">FastAPI</a>.</p>
+<hr />
+<p><strong>Documentation</strong>: <a href="https://nacosdev.github.io/sqlalchemy_api" target="_blank">https://nacosdev.github.io/sqlalchemy_api</a></p>
+<p><strong>Source Code</strong>: <a href="https://github.com/nacosdev/sqlalchemy_api" target="_blank">https://github.com/nacosdev/sqlalchemy_api</a></p>
+<hr />
+<p><strong>Table of Contents</strong></p>
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<hr />
 <h2 id="requirements">Requirements</h2>
 <ul>
 <li>Python&gt;=3.7</li>
@@ -659,93 +754,74 @@
 <h2 id="example">Example</h2>
 <h3 id="create-it">Create it</h3>
 <ul>
-<li>Create a file <code>main.py</code> with a simple SQLAlchemy model</li>
+<li>Create a file <code>main.py</code> with SQLAlchemy models and mount the crud using one of the adapters, in this example we will use the FastAPI adapter:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sqlalchemy_api.adapters.starlette_crud</span> <span class="kn">import</span> <span class="n">APICrud</span>
-<span class="hll"><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">create_engine</span>
-</span><span class="hll"><span class="kn">from</span> <span class="nn">sqlalchemy.ext.declarative</span> <span class="kn">import</span> <span class="n">declarative_base</span>
-</span>
-<span class="hll"><span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
-</span><span class="hll"><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span>
-</span><span class="hll">    <span class="s2">&quot;sqlite:///example.db&quot;</span><span class="p">,</span>
-</span><span class="hll">    <span class="n">connect_args</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;check_same_thread&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-</span><span class="hll"><span class="p">)</span>
-</span>
-<span class="hll"><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-</span><span class="hll">    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;users&quot;</span>
-</span><span class="hll">    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span class="hll">    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
-</span>
-<span class="hll"><span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>  <span class="c1"># Create tables</span>
-</span>
-<span class="n">app</span> <span class="o">=</span> <span class="n">APICrud</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
-</code></pre></div>
-<ul>
-<li>Create an instance of an APICrud from the Starlette adapter:</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="kn">from</span> <span class="nn">sqlalchemy_api.adapters.starlette_crud</span> <span class="kn">import</span> <span class="n">APICrud</span>
-</span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">create_engine</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sqlalchemy_api.adapters.fastapi_crud</span> <span class="kn">import</span> <span class="n">APICrud</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">create_engine</span><span class="p">,</span> <span class="n">ForeignKey</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.ext.declarative</span> <span class="kn">import</span> <span class="n">declarative_base</span>
+<span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span>
 
 <span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
+
 <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span>
     <span class="s2">&quot;sqlite:///example.db&quot;</span><span class="p">,</span>
     <span class="n">connect_args</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;check_same_thread&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
 <span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;users&quot;</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;John Doe&quot;</span><span class="p">)</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">posts</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Post&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Post</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;post&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;user.id&quot;</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;posts&quot;</span><span class="p">)</span>
 
 <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>  <span class="c1"># Create tables</span>
 
-<span class="hll"><span class="n">app</span> <span class="o">=</span> <span class="n">APICrud</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
-</span></code></pre></div>
-<p>You will also need an ASGI server and Starlette to be able to run the app, both are optional dependencies of SQLAlchemy API:</p>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>sqlalchemy-api<span class="o">[</span>asgi<span class="o">]</span>
+<span class="n">user_crud_router</span> <span class="o">=</span> <span class="n">APICrud</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+<span class="n">post_crud_router</span> <span class="o">=</span> <span class="n">APICrud</span><span class="p">(</span><span class="n">Post</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">user_crud_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/user&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">])</span>
+<span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">post_crud_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/post&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Post&quot;</span><span class="p">])</span>
+</code></pre></div>
+<p>You will also need an ASGI server and FastAPI to be able to run this app, both are optional dependencies of SQLAlchemy API:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>sqlalchemy-api<span class="o">[</span>fastapi<span class="o">]</span>
 </code></pre></div>
 <h3 id="run-it">Run it</h3>
 <div class="highlight"><pre><span></span><code>uvicorn<span class="w"> </span>main:app<span class="w"> </span>--reload
 </code></pre></div>
 <h3 id="use-it">Use it</h3>
-<p>Endpoints are automatically generated for the defined model, you can use the following endpoints to interact with them:</p>
-<ul>
-<li>Create: <code>POST localhost:8000</code>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="s1">&#39;http://localhost:8000&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">  &quot;name&quot;: &quot;foo&quot;</span>
-<span class="s1">}&#39;</span>
-</code></pre></div></li>
-<li>Get Many: <code>GET localhost:8000</code>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="s1">&#39;http://localhost:8000?page_size=100&amp;page=1&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept: application/json&#39;</span>
-</code></pre></div></li>
-<li>Get One: <code>GET localhost:8000/{id}</code>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="s1">&#39;http://localhost:8000/1&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept: application/json&#39;</span>
-</code></pre></div></li>
-<li>Update: <code>PUT localhost:8000/{id}</code>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span><span class="s1">&#39;PUT&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="s1">&#39;http://localhost:8000/1&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">  &quot;name&quot;: &quot;bar&quot;</span>
-<span class="s1">}&#39;</span>
-</code></pre></div></li>
-<li>Delete: <code>DELETE localhost:8000/{id}</code>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span><span class="s1">&#39;DELETE&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="s1">&#39;http://localhost:8000/1&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;accept: application/json&#39;</span>
-</code></pre></div></li>
-</ul>
-<p>More info about this in the <a href="crud/introduction/">CRUD</a> section.</p>
+<p>Endpoints are automatically generated for the defined models and the FastAPI adapter provides automatic Swagger documentation, you can access <a href="localhost:8000/docs">localhost:8000/docs</a> to interact with them:</p>
+<p align="center">
+  <a><img src="https://raw.githubusercontent.com/nacosdev/sqlalchemy_api/main/docs/assets/images/swagger-1.png" alt="Swagger"></a>
+</p>
+
+<p>SQLAlchemyAPI also provides different operators depending on the column data type, to filter the data:</p>
+<p align="center">
+  <a><img src="https://raw.githubusercontent.com/nacosdev/sqlalchemy_api/main/docs/assets/images/swagger-2.png" alt="Swagger2"></a>
+</p>
+
+<p>The data returned is automatically paginated and serialized, including the relationships defined in the models:</p>
+<p align="center">
+  <a><img src="https://raw.githubusercontent.com/nacosdev/sqlalchemy_api/main/docs/assets/images/swagger-3.png" alt="Swagger3"></a>
+</p>
+
+<p>Post data is automatically validated and serialized using Pydantic, for example, if you try to create a user wihout the required <code>age</code> field, you will get an error like this:</p>
+<p align="center">
+  <a><img src="https://raw.githubusercontent.com/nacosdev/sqlalchemy_api/main/docs/assets/images/swagger-4.png" alt="Swagger4"></a>
+</p>
+
+<h2 id="license">License</h2>
+<p><code>sqlalchemy-api</code> is distributed under the terms of the <a href="https://spdx.org/licenses/MIT.html">MIT</a> license.</p>
 
 
   
