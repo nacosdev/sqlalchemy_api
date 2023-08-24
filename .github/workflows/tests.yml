@@ -82,6 +82,8 @@ jobs:
           name: coverage
           path: coverage
       - run: ls -la coverage
+      - name: "Install dependencies"
+        run: pip install hatch
       - run: hatch run test:cov-combine --title "Coverage for ${{ github.sha }}"
       - name: Store coverage HTML
         uses: actions/upload-artifact@v3
