@@ -129,4 +129,88 @@ Post data is automatically validated and serialized using Pydantic, for example,
 
 `sqlalchemy-api` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
 
+For the following SQLAlchemy models
 
+```
+class User(Base):
+    __tablename__ = "user"
+    id = Column(Integer, primary_key=True)
+    posts = relationship("Post", back_populates="user")
+
+class Post(Base):
+    __tablename__ = "post"
+    content = Column(String)
+    user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+    user = relationship("User", back_populates="posts")
+```
+With SQLAlchemy you update the models by executing this statement
+
+```
+stmt = (
+    insert(Post).
+    values(content ='new post', user_id=1)
+)
+update_stmt = update(Post).where(Post.user_id == 1).values(content='new content')
+session.execute(stmt)
+```
+
+And with this library you will do the following requests with same result.
+```
+curl -X 'POST' \
+  'http://localhost:8000/post' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "content": "new post",
+  "user_id": 1
+}'
+curl -X 'PUT' \
+  'http://localhost:8000/post' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "content": "new post",
+  "user_id": 1
+}'
+```
+So it is supported.
+
+
+
+
+
+
+
+
+
+
+In this Example [https://nacosdev.github.io/sqlalchemy\_api/#example](https://nacosdev.github.io/sqlalchemy_api/#example) there is a user with many posts, if you want to create a new post related to the user, just create it with the user_id:
+```
+curl -X 'POST' \
+  'http://localhost:8000/post' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "title": "string",
+  "content": "string",
+  "user_id": 1
+}'
+```
+And then in the `GET /user` payload, all the related posts will be present, with the corresponding ID, so if you want to modify any of them, just send a PUT request like this.
+```
+curl -X 'PUT' \
+  'http://localhost:8002/post/1' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "title": "string",
+  "content": "string",
+  "user_id": 0
+}'
+```
+You can also filter by all the posts of a user by using the post endpoint like this:
+```
+curl -X 'GET' \
+  'http://localhost:8002/post?page_size=100&page=1&user_id=1' \
+  -H 'accept: application/json'
+```

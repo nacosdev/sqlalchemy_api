@@ -12,7 +12,9 @@ from sqlalchemy import (
 )
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.dialects.postgresql import UUID
 from enum import Enum as PyEnum
+from uuid import uuid4
 import os
 
 
@@ -46,6 +48,13 @@ class Post(Base):  # pragma: no cover
     id = Column(Integer, primary_key=True)
     content = Column(String)
     user_id = Column(ForeignKey("users.id"))
+
+
+class Comment(Base):
+    __tablename__ = "comments"
+    id = Column(UUID, primary_key=True, default=uuid4)
+    content = Column(String)
+    post_id = Column(ForeignKey("posts.id"))
 
 
 database_uri = os.getenv(

@@ -55,8 +55,11 @@ class APICrud(APIRouter):
 
     def init_routes(self) -> List[BaseRoute]:
         router = APIRouter()
+        row_id_type = self.crud_handler.primary_key_type
 
-        async def get(request: Request, row_id: int = Path(...)):
+        async def get(
+            request: Request, row_id: row_id_type = Path(...)  # type: ignore
+        ):
             res = await self.crud_handler.get(row_id=row_id)
             return self.generic_to_fastapi_response(res)
 
@@ -77,14 +80,18 @@ class APICrud(APIRouter):
             res = await self.crud_handler.post(payload=payload)
             return self.generic_to_fastapi_response(res)
 
-        async def delete(request: Request, row_id: int = Path(...)):
+        async def delete(
+            request: Request, row_id: row_id_type = Path(...)  # type: ignore
+        ):
             res = await self.crud_handler.delete(row_id=row_id)
             return self.generic_to_fastapi_response(res)
 
         PutSchema = self.crud_handler.schema_put
 
         async def put(
-            request: Request, schema: PutSchema, row_id: int = Path(...)  # type: ignore
+            request: Request,
+            schema: PutSchema,  # type: ignore
+            row_id: row_id_type = Path(...),  # type: ignore
         ):
             payload = await request.json()
             res = await self.crud_handler.put(row_id=row_id, payload=payload)
