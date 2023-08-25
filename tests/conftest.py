@@ -5,7 +5,7 @@ from starlette.testclient import TestClient as StarletteTestClient
 from typing import Generator
 from sqlalchemy_api.adapters.starlette_crud import APICrud as StarletteAPICrud
 from sqlalchemy_api.adapters.fastapi_crud import APICrud as FastAPIAPICrud
-from tests.database.session import User, engine, TestSession, Base, Post
+from tests.database.session import User, engine, TestSession, Base, Post, Comment
 import pytest
 
 # Define two applications, one with Starlette and one with FastAPI
@@ -19,10 +19,16 @@ starlette_app.mount(
     "/post",
     StarletteAPICrud(model=Post, engine=engine),
 )
+starlette_app.mount(
+    "/comment",
+    StarletteAPICrud(model=Comment, engine=engine),
+)
+
 
 fastapi_app = FastAPI()
 fastapi_app.include_router(FastAPIAPICrud(User, engine), prefix="/user")
 fastapi_app.include_router(FastAPIAPICrud(Post, engine), prefix="/post")
+fastapi_app.include_router(FastAPIAPICrud(Comment, engine), prefix="/comment")
 
 
 @pytest.fixture(

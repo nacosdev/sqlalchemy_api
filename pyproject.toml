@@ -75,7 +75,8 @@ dependencies = [
   "starlette",
   "httpx",
   "sqlalchemy-utc>=0.10.0",
-  "pytest-asyncio"
+  "pytest-asyncio",
+  "psycopg2-binary>=2.9"
 ]
 
 #[[tool.hatch.envs.test.matrix]]

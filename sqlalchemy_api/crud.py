@@ -25,10 +25,19 @@ from typing import Any, List, Type, Dict
 import anyio
 
 
-def crud_route():
+def crud_route(validate_row_id: bool = False):
+    """
+    Decorator for CRUD routes
+    Here we handle exceptions and validate row_id
+    Params:
+    - `validate_row_id`: if True, validate row_id type
+    """
+
     def decorator(func):
         async def wrapper(self, *args, **kwargs) -> GenericResponse:
             try:
+                if validate_row_id:
+                    kwargs["row_id"] = self.validate_row_id(kwargs["row_id"])
                 return await func(self, *args, **kwargs)
             except Exception as exc:
                 exception_handler = exception_handlers.get(
@@ -54,6 +63,7 @@ class CRUDHandler:
     schema_post: Type[BaseModel]
     schema_put: Type[BaseModel]
     schema_filters: Type[BaseModel]
+    primary_key_type: Any
     debug: bool
 
     def __init__(
@@ -74,13 +84,11 @@ class CRUDHandler:
         self.sessionmaker = sqlsessionmaker(
             bind=self.engine, expire_on_commit=False  # type: ignore
         )
-        self.primary_key_type = get_column_python_type(
-            inspect(self.model).primary_key[0]
-        )
+        self.primary_key = inspect(self.model).primary_key[0]
+        self.primary_key_type = get_column_python_type(self.primary_key)
         self.primary_key_names = [
             primary_key.key for primary_key in inspect(self.model).primary_key
         ]
-        self.primary_key = inspect(self.model).primary_key[0]
         schema_model = SchemaModel(model=self.model)
         self.schema_base = schema_model.base()
         self.schema_with_relations = schema_model.relations()
@@ -110,7 +118,7 @@ class CRUDHandler:
             page=page.number,
         )
 
-    @crud_route()
+    @crud_route(validate_row_id=True)
     async def get(self, row_id: Any) -> GenericResponse:
         with self.sessionmaker() as session:
             stmt = select(self.model).where(self.primary_key == row_id)
@@ -151,7 +159,7 @@ class CRUDHandler:
                 media_type="application/json",
             )
 
-    @crud_route()
+    @crud_route(validate_row_id=True)
     async def delete(self, row_id: Any) -> GenericResponse:
         with self.sessionmaker() as session:
             stmt = delete(self.model).where(self.primary_key == row_id)
@@ -159,9 +167,8 @@ class CRUDHandler:
             session.commit()
             if res.rowcount == 0:
                 raise NotFoundException
-            id = self.primary_key_type(row_id)
             return GenericResponse(
-                content=RowIDResponse(row_id=id).model_dump_json(),
+                content=RowIDResponse(row_id=row_id).model_dump_json(),
                 status_code=200,
                 media_type="application/json",
             )
@@ -184,7 +191,7 @@ class CRUDHandler:
                 media_type="application/json",
             )
 
-    @crud_route()
+    @crud_route(validate_row_id=True)
     async def put(self, row_id: Any, payload: Dict) -> GenericResponse:
         with self.sessionmaker() as session:
             formatted_payload = self.schema_put(**payload).model_dump(
@@ -246,6 +253,15 @@ class CRUDHandler:
                 )
             )
         return filters
+
+    def validate_row_id(self, row_id: Any) -> Any:
+        _type = self.primary_key_type
+
+        class PrimaryKeySchema(BaseModel):
+            pkey: _type  # type: ignore
+
+        pkey_schema = PrimaryKeySchema(pkey=row_id)
+        return pkey_schema.pkey
 
     def apply_filters(self, stmt: Select, query_params: Dict) -> Select:
         filters = self.get_filters()
