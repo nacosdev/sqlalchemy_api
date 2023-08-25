@@ -185,6 +185,10 @@ class TestValidatePrimaryKey:
         detail = response.json().get("detail")[0]
         assert detail.get("type") == "int_parsing"
 
+    @pytest.mark.skipif(
+        "postgres" not in engine.url.drivername,
+        reason="Only postgresql has uuid type",
+    )
     def test_sending_invalid_uuid(self, client, db_session):
         response = client.get(f"{COMMENT_PREFIX}/123")
         assert response.status_code == 422
