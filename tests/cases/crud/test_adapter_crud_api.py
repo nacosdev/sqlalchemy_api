@@ -8,6 +8,7 @@ import pytest
 
 USER_PREFIX = "/user"
 POST_PREFIX = "/post"
+COMMENT_PREFIX = "/comment"
 example_user = {
     "name": "John",
     "active": True,
@@ -175,3 +176,21 @@ class TestCrudValidations:
         assert response.status_code == 422
         response_detail = response.json().get("detail")[0]
         assert "birthday" in response_detail.get("loc")
+
+
+class TestValidatePrimaryKey:
+    def test_validate_sending_wrong_primary_key(self, client, db_session):
+        response = client.get(f"{USER_PREFIX}/asd")
+        assert response.status_code == 422
+        detail = response.json().get("detail")[0]
+        assert detail.get("type") == "int_parsing"
+
+    @pytest.mark.skipif(
+        "postgres" not in engine.url.drivername,
+        reason="Only postgresql has uuid type",
+    )
+    def test_sending_invalid_uuid(self, client, db_session):
+        response = client.get(f"{COMMENT_PREFIX}/123")
+        assert response.status_code == 422
+        detail = response.json().get("detail")[0]
+        assert detail.get("type") in ["uuid_parsing", "uuid_type"]

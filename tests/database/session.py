@@ -12,8 +12,18 @@ from sqlalchemy import (
 )
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.dialects.postgresql import UUID
 from enum import Enum as PyEnum
+from uuid import uuid4
 import os
+
+database_uri = os.getenv(
+    "TEST_DATABASE_URI",
+    "postgresql://postgres:postgres@localhost:5432/test_db"
+    # "TEST_DATABASE_URI", "sqlite:///testing.db?check_same_thread=False"
+)
+
+engine = create_engine(database_uri)  # pragma: no cover
 
 
 class Base(DeclarativeBase):  # pragma: no cover
@@ -48,12 +58,21 @@ class Post(Base):  # pragma: no cover
     user_id = Column(ForeignKey("users.id"))
 
 
-database_uri = os.getenv(
-    "TEST_DATABASE_URI",
-    "postgresql://postgres:postgres@localhost:5432/test_db"
-    # "TEST_DATABASE_URI", sqlite:///testing.db?check_same_thread=False",
-)
+if "postgres" in engine.url.drivername:
 
-engine = create_engine(database_uri)  # pragma: no cover
+    class Comment(Base):
+        __tablename__ = "comments"
+        id = Column(UUID, primary_key=True, default=uuid4)
+        content = Column(String)
+        post_id = Column(ForeignKey("posts.id"))
+
+else:
+
+    class Comment(Base):
+        __tablename__ = "comments"
+        id = Column(Integer, primary_key=True)
+        content = Column(String)
+        post_id = Column(ForeignKey("posts.id"))
+
 
 TestSession: Session = sessionmaker(bind=engine)
