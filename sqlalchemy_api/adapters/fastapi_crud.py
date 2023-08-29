@@ -1,13 +1,48 @@
 from fastapi import Request, Path, Depends, Query, Response
-from fastapi.routing import APIRouter, BaseRoute
+from fastapi.types import IncEx
+from fastapi.routing import APIRouter, BaseRoute, APIRoute
 from sqlalchemy_api.crud import CRUDHandler, GenericResponse
 from sqlalchemy_api._types import ENGINE_TYPE
 from sqlalchemy_api.pydantic_utils import PageSchema
 from sqlalchemy_api.actions import Actions, ALL_ACTIONS
 from sqlalchemy_api.filtering import Filter
 from inspect import Parameter, Signature
-from typing import List, Callable
+from typing import List, Callable, TypedDict, Any, Dict, Set, Sequence, Optional, Union, Type
+from enum import Enum
 
+
+class FastAPIEndpointConfig(TypedDict):
+    response_model: Any
+    status_code: Optional[int]
+    tags: Optional[List[Union[str, Enum]]]
+    dependencies: Optional[Sequence[Depends]]
+    summary: Optional[str]
+    description: Optional[str]
+    response_description: str
+    responses: Optional[Dict[Union[int, str], Dict[str, Any]]]
+    deprecated: Optional[bool]
+    methods: Optional[Union[Set[str], List[str]]]
+    operation_id: Optional[str]
+    response_model_include: Optional[IncEx]
+    response_model_exclude: Optional[IncEx]
+    response_model_by_alias: bool
+    response_model_exclude_unset: bool
+    response_model_exclude_defaults: bool
+    response_model_exclude_none: bool
+    include_in_schema: bool
+    name: Optional[str]
+    route_class_override: Optional[Type[APIRoute]]
+    callbacks: Optional[List[BaseRoute]]
+    openapi_extra: Optional[Dict[str, Any]]
+
+class FastAPIConfig(TypedDict):
+    all: Optional[FastAPIEndpointConfig]
+    get: Optional[FastAPIEndpointConfig]
+    get_many: Optional[FastAPIEndpointConfig]
+    post: Optional[FastAPIEndpointConfig]
+    put: Optional[FastAPIEndpointConfig]
+    delete: Optional[FastAPIEndpointConfig]
+    
 
 class APICrud(APIRouter):
     """
@@ -22,7 +57,7 @@ class APICrud(APIRouter):
 
     crud_handler: CRUDHandler
     actions: List[Actions]
-
+    fastapi_config: FastAPIConfig
     def __init__(
         self,
         model,
@@ -32,7 +67,9 @@ class APICrud(APIRouter):
         page_size_max: int = 1000,
         debug: bool = False,
         actions: List[Actions] = ALL_ACTIONS,
+        fastapi_config: FastAPIConfig = None,
     ):
+        self.fastapi_config = fastapi_config or {}
         """
         - `model`: SQLAlchemy model
         - `engine`: SQLAlchemy engine
@@ -41,6 +78,7 @@ class APICrud(APIRouter):
         - `page_size_max`: max page size
         - `actions`: list of actions to enable, default is all
         """
+        
         self.crud_handler = CRUDHandler(
             model=model,
             engine=engine,
@@ -103,6 +141,8 @@ class APICrud(APIRouter):
                 endpoint=get_many,
                 methods=["GET"],
                 response_model=self.crud_handler.schema_paginated,
+                **self.fastapi_config.get("all", {}),
+                **self.fastapi_config.get("get_many", {}),
             )
         if Actions.GET in self.actions:
             router.add_api_route(
@@ -110,6 +150,8 @@ class APICrud(APIRouter):
                 endpoint=get,
                 methods=["GET"],
                 response_model=self.crud_handler.schema_relations,
+                **self.fastapi_config.get("all", {}),
+                **self.fastapi_config.get("get", {}),
             )
 
         if Actions.CREATE in self.actions:
@@ -118,6 +160,8 @@ class APICrud(APIRouter):
                 endpoint=post,
                 methods=["POST"],
                 response_model=self.crud_handler.schema_base,
+                **self.fastapi_config.get("all", {}),
+                **self.fastapi_config.get("post", {}),
             )
 
         if Actions.DELETE in self.actions:
@@ -125,6 +169,8 @@ class APICrud(APIRouter):
                 path="/{row_id}",
                 endpoint=delete,
                 methods=["DELETE"],
+                **self.fastapi_config.get("all", {}),
+                **self.fastapi_config.get("delete", {}),
                 # response_model=self.crud_handler.pydantic_model
             )
 
@@ -133,6 +179,8 @@ class APICrud(APIRouter):
                 path="/{row_id}",
                 endpoint=put,
                 methods=["PUT"],
+                **self.fastapi_config.get("all", {}),
+                **self.fastapi_config.get("put", {}),
                 # response_model=self.crud_handler.pydantic_model
             )
         return router.routes

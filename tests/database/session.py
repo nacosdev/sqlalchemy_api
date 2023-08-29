@@ -59,7 +59,6 @@ class Post(Base):  # pragma: no cover
 
 
 if "postgres" in engine.url.drivername:
-
     class Comment(Base):
         __tablename__ = "comments"
         id = Column(UUID, primary_key=True, default=uuid4)
