@@ -59,6 +59,9 @@ markdown_extensions:
   - pymdownx.highlight
   - pymdownx.tabbed
   - pymdownx.superfences
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
 
 watch:
   - sqlalchemy_api/

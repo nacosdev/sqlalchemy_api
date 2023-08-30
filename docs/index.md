@@ -39,17 +39,15 @@ SQLAlchemy API is a library that helps to turn the [SQLAlchemy](https://www.sqla
 
 ### Features 
 
-<p>
-<input type="checkbox" checked> Mount CRUD endpoints for a SQLAlchemy model.<br/>
-<input type="checkbox" checked> Automatic serialization and validation of the data using Pydantic.<br/>
-<input type="checkbox" checked> Automatic pagination of the data.<br/>
-<input type="checkbox" checked> Allow querying the data using different operators depending on the column data type.<br/>
-<input type="checkbox" checked> Support <a href="https://github.com/encode/starlettehttps://github.com/encode/starlette">Starlette</a><br/>
-<input type="checkbox" checked> Support <a href="https://github.com/tiangolo/fastapi">Support FastAPI</a><br/>
-<input type="checkbox"> Support <a href="https://github.com/Neoteroi/BlackSheep">Blacksheep 🚧</a><br/>
-<input type="checkbox"> Support custom queries. 🚧<br/>
-<input type="checkbox"> Autentication. 🚧<br/>
-</p>
+- [x] Mount CRUD endpoints for a SQLAlchemy model.<br/>
+- [x] Automatic serialization and validation of the data using Pydantic.<br/>
+- [x] Automatic pagination of the data.<br/>
+- [x] Allow querying the data using different operators depending on the column data type.<br/>
+- [x] Support <a href="https://github.com/encode/starlettehttps://github.com/encode/starlette">Starlette</a><br/>
+- [x] Support <a href="https://github.com/tiangolo/fastapi">Support FastAPI</a><br/>
+- [ ] Support <a href="https://github.com/Neoteroi/BlackSheep">Blacksheep 🚧</a><br/>
+- [ ] Support custom queries. 🚧<br/>
+- [ ] Autentication. 🚧<br/>
 
 ---
 
