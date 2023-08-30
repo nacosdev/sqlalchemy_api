@@ -17,7 +17,7 @@
   </a>
 </p>
 
-SQLAlchemy API is a library that helps to turn the [SQLAlchemy](https://www.sqlalchemy.org/) models into a REST API, allowing all the basic CRUD operations. It uses the power of [Pydantic 2](https://docs.pydantic.dev/dev-v2/), to validate and serialize the data. This is a framework-agnostic library that can be used with any web framework. Currently, it provides support for [Starlette](https://www.starlette.io/) and [FastAPI](https://fastapi.tiangolo.com/).
+SQLAlchemy API is a library that helps to turn the [SQLAlchemy](https://www.sqlalchemy.org/) models into a REST API. It uses the power of [Pydantic 2](https://docs.pydantic.dev/dev-v2/), to validate and serialize the data. This is a framework-agnostic library that can be used with any web framework. Currently, it provides support for [Starlette](https://www.starlette.io/) and [FastAPI](https://fastapi.tiangolo.com/).
 
 ---
 
@@ -55,10 +55,11 @@ pip install sqlalchemy-api
 
 ```python
 from sqlalchemy_api.adapters.fastapi_crud import APICrud
-from sqlalchemy import Column, Integer, String, create_engine, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import create_engine, ForeignKey
+from sqlalchemy.orm import relationship, mapped_column, Mapped
 from sqlalchemy.ext.declarative import declarative_base
 from fastapi import FastAPI
+from typing import List
 
 Base = declarative_base()
 
@@ -69,18 +70,18 @@ engine = create_engine(
 
 class User(Base):
     __tablename__ = "user"
-    id = Column(Integer, primary_key=True)
-    name = Column(String(50), default="John Doe")
-    age = Column(Integer, nullable=False)
-    posts = relationship("Post", back_populates="user")
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(default="John Doe")
+    age: Mapped[int] = mapped_column(nullable=False)
+    posts: Mapped[List['Post']] = relationship(back_populates="user")
 
 class Post(Base):
     __tablename__ = "post"
-    id = Column(Integer, primary_key=True)
-    title = Column(String)
-    content = Column(String)
-    user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
-    user = relationship("User", back_populates="posts")
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str] = mapped_column()
+    content: Mapped[str] = mapped_column()
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
+    user: Mapped['User'] = relationship(back_populates="posts")
 
 Base.metadata.create_all(engine)  # Create tables
 
@@ -132,5 +133,3 @@ Post data is automatically validated and serialized using Pydantic, for example,
 ## License
 
 `sqlalchemy-api` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
-
-
