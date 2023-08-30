@@ -39,14 +39,14 @@ SQLAlchemy API is a library that helps to turn the [SQLAlchemy](https://www.sqla
 
 ### Features 
 
-- [x] Mount CRUD endpoints for a SQLAlchemy model.<br/>
-- [x] Automatic serialization and validation of the data using Pydantic.<br/>
-- [x] Automatic pagination of the data.<br/>
-- [x] Allow querying the data using different operators depending on the column data type.<br/>
-- [x] Support <a href="https://github.com/encode/starlettehttps://github.com/encode/starlette">Starlette</a><br/>
-- [x] Support <a href="https://github.com/tiangolo/fastapi">Support FastAPI</a><br/>
-- [ ] Support <a href="https://github.com/Neoteroi/BlackSheep">Blacksheep 🚧</a><br/>
-- [ ] Support custom queries. 🚧<br/>
+- [x] Mount CRUD endpoints for a SQLAlchemy model.
+- [x] Automatic serialization and validation of the data using Pydantic.
+- [x] Automatic pagination of the data.
+- [x] Allow querying the data using different operators depending on the column data type.
+- [x] Support [Starlette](https://github.com/encode/starlette)
+- [x] Support Support [FastAPI](https://github.com/tiangolo/fastapi)
+- [ ] Support [Blacksheep](https://github.com/Neoteroi/BlackSheep) 🚧
+- [ ] Support custom queries. 🚧
 - [ ] Autentication. 🚧<br/>
 
 ---
