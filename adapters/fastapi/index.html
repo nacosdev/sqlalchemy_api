@@ -89,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#simple-example" class="md-skip">
+        <a href="#fastapi-apicrud" class="md-skip">
           Skip to content
         </a>
       
@@ -497,23 +497,50 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#simple-example" class="md-nav__link">
-    Simple example
+  <a href="#fastapi-apicrud" class="md-nav__link">
+    Fastapi APICrud
   </a>
   
 </li>
       
         <li class="md-nav__item">
+  <a href="#api-reference" class="md-nav__link">
+    API Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-example" class="md-nav__link">
+    Simple example
+  </a>
+  
+    <nav class="md-nav" aria-label="Simple example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-it" class="md-nav__link">
+    Create it
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#run-it" class="md-nav__link">
     Run it
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#use-it" class="md-nav__link">
     Use it
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -610,23 +637,50 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#simple-example" class="md-nav__link">
-    Simple example
+  <a href="#fastapi-apicrud" class="md-nav__link">
+    Fastapi APICrud
   </a>
   
 </li>
       
         <li class="md-nav__item">
+  <a href="#api-reference" class="md-nav__link">
+    API Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-example" class="md-nav__link">
+    Simple example
+  </a>
+  
+    <nav class="md-nav" aria-label="Simple example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-it" class="md-nav__link">
+    Create it
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#run-it" class="md-nav__link">
     Run it
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#use-it" class="md-nav__link">
     Use it
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -647,38 +701,45 @@
 
   <h1>Fastapi</h1>
 
-<h3 id="simple-example">Simple example</h3>
-<ul>
-<li>Create a file <code>main.py</code> with SQLAlchemy models:</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span>
-<span class="kn">from</span> <span class="nn">sqlalchemy_api.adapters.fastapi_crud</span> <span class="kn">import</span> <span class="n">APICrud</span>
-<span class="hll"><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">create_engine</span>
-</span><span class="hll"><span class="kn">from</span> <span class="nn">sqlalchemy.ext.declarative</span> <span class="kn">import</span> <span class="n">declarative_base</span>
-</span>
-<span class="hll"><span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
-</span>
-<span class="hll"><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span>
-</span><span class="hll">    <span class="s2">&quot;sqlite:///example.db&quot;</span><span class="p">,</span>
-</span><span class="hll">    <span class="n">connect_args</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;check_same_thread&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-</span><span class="hll"><span class="p">)</span>
-</span>
-<span class="hll"><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-</span><span class="hll">    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;users&quot;</span>
-</span><span class="hll">    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span class="hll">    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
-</span>
-<span class="hll"><span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>  <span class="c1"># Create tables</span>
-</span>
-<span class="n">user_crud_router</span> <span class="o">=</span> <span class="n">APICrud</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+<h3 id="fastapi-apicrud">Fastapi APICrud</h3>
+<p><code>APICrud</code> from the FastAPI adapter will allow you to send any key word arguments that you can send to a FastAPI router, you can also import <code>FastAPIConfig</code> and <code>FastAPIEndpointConfig</code> to have a better autocompletion and documentation of the parameters you can send.</p>
+<p align="center">
+  <a><img src="/sqlalchemy_api/assets/images/fastapi_adapter/autocompletion2.png" alt="autocompletion 2"></a>
+</p>
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
-<span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">user_crud_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/user&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">])</span>
-</code></pre></div>
-<p>FastAPI adapter is an instance of APIRouter, so you can include it in your app as any other FastAPI router.</p>
-<p><div class="highlight"><pre><span></span><code><span class="hll"><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span>
-</span><span class="hll"><span class="kn">from</span> <span class="nn">sqlalchemy_api.adapters.fastapi_crud</span> <span class="kn">import</span> <span class="n">APICrud</span>
-</span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">create_engine</span>
+<h3 id="api-reference">API Reference</h3>
+<p><code>APICrud</code> from FastAPI will support all the <a href="/sqlalchemy_api/crud/introduction/#api-reference">parameters that a base APICrud supports</a>, plus the following ones:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fastapi_config</td>
+<td><code>dict | FastAPIConfig</code></td>
+<td>The fastapi extra config for each endpoint</td>
+<td>optional</td>
+</tr>
+</tbody>
+</table>
+<h3 id="simple-example">Simple example</h3>
+<p>In this example we will:</p>
+<ul>
+<li>Create a file <code>main.py</code> with SQLAlchemy models</li>
+<li>Create an APICrud for the model, using the FastAPI adapter with a basic extra config</li>
+<li>Create a FastAPI app</li>
+<li>Include the APICrud in the app</li>
+</ul>
+<h4 id="create-it">Create it</h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">HTTPException</span><span class="p">,</span> <span class="n">Depends</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy_api.adapters.fastapi_crud</span> <span class="kn">import</span> <span class="n">APICrud</span><span class="p">,</span> <span class="n">FastAPIConfig</span><span class="p">,</span> <span class="n">FastAPIEndpointConfig</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">mapped_column</span><span class="p">,</span> <span class="n">Mapped</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.ext.declarative</span> <span class="kn">import</span> <span class="n">declarative_base</span>
 
 <span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
@@ -688,25 +749,42 @@
     <span class="n">connect_args</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;check_same_thread&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
 <span class="p">)</span>
 
+<span class="k">def</span> <span class="nf">unauthorized</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">401</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Unauthorized&quot;</span><span class="p">)</span>
+
 <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;users&quot;</span>
-    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">()</span>
 
 <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>  <span class="c1"># Create tables</span>
 
-<span class="hll"><span class="n">user_crud_router</span> <span class="o">=</span> <span class="n">APICrud</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
-</span>
-<span class="hll"><span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
-</span><span class="hll"><span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">user_crud_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/user&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">])</span>
-</span></code></pre></div>
-If you are running this app without a previos FastAPI instalation, you will also need an ASGI server and FastAPI to be able to run this app, both are optional dependencies of SQLAlchemy API:</p>
+<span class="n">user_crud_router</span> <span class="o">=</span> <span class="n">APICrud</span><span class="p">(</span>
+    <span class="n">User</span><span class="p">,</span> 
+    <span class="n">engine</span><span class="p">,</span>
+    <span class="n">fastapi_config</span><span class="o">=</span><span class="n">FastAPIConfig</span><span class="p">(</span>
+        <span class="nb">all</span><span class="o">=</span><span class="n">FastAPIEndpointConfig</span><span class="p">(</span> <span class="c1"># This config will be applied to all endpoints</span>
+            <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Custom Tag&quot;</span><span class="p">],</span>
+        <span class="p">),</span>
+        <span class="n">post</span><span class="o">=</span><span class="n">FastAPIEndpointConfig</span><span class="p">(</span> <span class="c1"># This config will be applied to the CREATE endpoint</span>
+            <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span><span class="n">Depends</span><span class="p">(</span><span class="n">unauthorized</span><span class="p">)]</span>
+    <span class="p">))</span>
+<span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">user_crud_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/user&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">])</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>FastAPI adapter is an instance of <a href="https://fastapi.tiangolo.com/tutorial/bigger-applications/#apirouter">FastAPI APIRouter</a>, so you can include it in your app as any other FastAPI router.</p>
+</div>
+<p>If you are running this app without a previos FastAPI instalation, you will also need an ASGI server and FastAPI to be able to run this app, both are optional dependencies of SQLAlchemy API:</p>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>sqlalchemy-api<span class="o">[</span>fastapi<span class="o">]</span>
 </code></pre></div>
-<h3 id="run-it">Run it</h3>
+<h4 id="run-it">Run it</h4>
 <div class="highlight"><pre><span></span><code>uvicorn<span class="w"> </span>main:app<span class="w"> </span>--reload
 </code></pre></div>
-<h3 id="use-it">Use it</h3>
+<h4 id="use-it">Use it</h4>
 <p>All the <a href="/sqlalchemy_api/crud/introduction">CRUD</a> endpoints are now available at <a href="http://localhost:8000/user">http://localhost:8000/user</a> and the OpenAPI documentation at <a href="http://localhost:8000/docs">http://localhost:8000/docs</a>:</p>
 
 
