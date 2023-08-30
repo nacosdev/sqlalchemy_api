@@ -57,11 +57,11 @@ For the example we will assume the SQLAlchemyAPI CRUD is mounted in `http://loca
 ```python
 class User(Base):
     __tablename__ = "user"
-    id = Column(Integer, primary_key=True)
-    name = Column(String(50))
-    age = Column(Integer, nullable=False)
-    date_of_birth = Column(Date)
-    address = Column(String(100))
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(nullable=False)
+    age: Mapped[int] = mapped_column()
+    date_of_birth: Mapped[date] = mapped_column(nullable=False)
+    address: Mapped[str] = mapped_column(nullable=False)
 ```
 
 

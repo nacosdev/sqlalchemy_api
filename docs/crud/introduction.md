@@ -19,7 +19,8 @@ Each [adapter](/sqlalchemy_api/adapters/introduction) will provide an `APICrud` 
 
 ```python 
 from sqlalchemy_api.adapters.<adapter>_crud import APICrud
-from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy import create_engine
+from sqlalchemy.orm import mapped_column, Mapped
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -30,8 +31,8 @@ engine = create_engine(
 
 class User(Base):
     __tablename__ = "users"
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column()
 
 Base.metadata.create_all(engine)  # Create tables
 
