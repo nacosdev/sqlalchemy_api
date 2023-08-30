@@ -87,7 +87,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#requirements" class="md-skip">
+        <a href="#features" class="md-skip">
           Skip to content
         </a>
       
@@ -280,6 +280,13 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    Features
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#requirements" class="md-nav__link">
@@ -640,6 +647,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    Features
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#requirements" class="md-nav__link">
     Requirements
   </a>
@@ -737,22 +751,39 @@
 <hr />
 <p><strong>Table of Contents</strong></p>
 <ul>
+<li><a href="#features">Features</a></li>
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#installation">Installation</a></li>
+<li><a href="#example">Example</a></li>
 <li><a href="#license">License</a></li>
 </ul>
 <hr />
-<h2 id="requirements">Requirements</h2>
+<h3 id="features">Features</h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Mount CRUD endpoints for a SQLAlchemy model.<br/></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Automatic serialization and validation of the data using Pydantic.<br/></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Automatic pagination of the data.<br/></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Allow querying the data using different operators depending on the column data type.<br/></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Support <a href="https://github.com/encode/starlettehttps://github.com/encode/starlette">Starlette</a><br/></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Support <a href="https://github.com/tiangolo/fastapi">Support FastAPI</a><br/></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Support <a href="https://github.com/Neoteroi/BlackSheep">Blacksheep 🚧</a><br/></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Support custom queries. 🚧<br/></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Autentication. 🚧<br/></li>
+</ul>
+<hr />
+<h3 id="requirements">Requirements</h3>
 <ul>
 <li>Python&gt;=3.7</li>
 <li>SQLAlchemy&gt;=1.4</li>
 <li>Pydantic&gt;=2</li>
 </ul>
-<h2 id="installation">Installation</h2>
+<hr />
+<h3 id="installation">Installation</h3>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>sqlalchemy-api
 </code></pre></div>
-<h2 id="example">Example</h2>
-<h3 id="create-it">Create it</h3>
+<hr />
+<h3 id="example">Example</h3>
+<h4 id="create-it">Create it</h4>
 <ul>
 <li>Create a file <code>main.py</code> with SQLAlchemy models and mount the crud using one of the adapters, in this example we will use the FastAPI adapter:</li>
 </ul>
@@ -797,10 +828,10 @@
 <p>You will also need an ASGI server and FastAPI to be able to run this app, both are optional dependencies of SQLAlchemy API:</p>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>sqlalchemy-api<span class="o">[</span>fastapi<span class="o">]</span>
 </code></pre></div>
-<h3 id="run-it">Run it</h3>
+<h4 id="run-it">Run it</h4>
 <div class="highlight"><pre><span></span><code>uvicorn<span class="w"> </span>main:app<span class="w"> </span>--reload
 </code></pre></div>
-<h3 id="use-it">Use it</h3>
+<h4 id="use-it">Use it</h4>
 <p>Endpoints are automatically generated for the defined models and the FastAPI adapter provides automatic Swagger documentation, you can access <a href="localhost:8000/docs">localhost:8000/docs</a> to interact with them:</p>
 <p align="center">
   <a><img src="https://raw.githubusercontent.com/nacosdev/sqlalchemy_api/main/docs/assets/images/swagger-1.png" alt="Swagger"></a>
@@ -821,7 +852,8 @@
   <a><img src="https://raw.githubusercontent.com/nacosdev/sqlalchemy_api/main/docs/assets/images/swagger-4.png" alt="Swagger4"></a>
 </p>
 
-<h2 id="license">License</h2>
+<hr />
+<h3 id="license">License</h3>
 <p><code>sqlalchemy-api</code> is distributed under the terms of the <a href="https://spdx.org/licenses/MIT.html">MIT</a> license.</p>
 
 
