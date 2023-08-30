@@ -29,27 +29,49 @@ SQLAlchemy API is a library that helps to turn the [SQLAlchemy](https://www.sqla
 
 **Table of Contents**
 
+- [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
+- [Example](#example)
 - [License](#license)
 
 ---
 
-## Requirements
+### Features 
+
+<p>
+<input type="checkbox" checked> Mount CRUD endpoints for a SQLAlchemy model.<br/>
+<input type="checkbox" checked> Automatic serialization and validation of the data using Pydantic.<br/>
+<input type="checkbox" checked> Automatic pagination of the data.<br/>
+<input type="checkbox" checked> Allow querying the data using different operators depending on the column data type.<br/>
+<input type="checkbox" checked> Support <a href="https://github.com/encode/starlettehttps://github.com/encode/starlette">Starlette</a><br/>
+<input type="checkbox" checked> Support <a href="https://github.com/tiangolo/fastapi">Support FastAPI</a><br/>
+<input type="checkbox"> Support <a href="https://github.com/Neoteroi/BlackSheep">Blacksheep 🚧</a><br/>
+<input type="checkbox"> Support custom queries. 🚧<br/>
+<input type="checkbox"> Autentication. 🚧<br/>
+</p>
+
+---
+
+### Requirements
 
 - Python>=3.7
 - SQLAlchemy>=1.4
 - Pydantic>=2
 
-## Installation
+---
+
+### Installation
 
 ```bash
 pip install sqlalchemy-api
 ```
 
-## Example
+---
 
-### Create it
+### Example
+
+#### Create it
 
 - Create a file `main.py` with SQLAlchemy models and mount the crud using one of the adapters, in this example we will use the FastAPI adapter:
 
@@ -99,13 +121,13 @@ You will also need an ASGI server and FastAPI to be able to run this app, both a
 pip install sqlalchemy-api[fastapi]
 ```
 
-### Run it
+#### Run it
+
 ```bash
 uvicorn main:app --reload
 ```
 
-
-### Use it
+#### Use it
 Endpoints are automatically generated for the defined models and the FastAPI adapter provides automatic Swagger documentation, you can access [localhost:8000/docs](localhost:8000/docs) to interact with them:
 
 <p align="center">
@@ -130,6 +152,8 @@ Post data is automatically validated and serialized using Pydantic, for example,
   <a><img src="https://raw.githubusercontent.com/nacosdev/sqlalchemy_api/main/docs/assets/images/swagger-4.png" alt="Swagger4"></a>
 </p>
 
-## License
+---
+
+### License
 
 `sqlalchemy-api` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
