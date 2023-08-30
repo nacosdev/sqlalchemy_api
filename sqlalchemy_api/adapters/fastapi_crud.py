@@ -70,7 +70,7 @@ class APICrud(APIRouter):
 
     crud_handler: CRUDHandler
     actions: List[Actions]
-    fastapi_config: Union[Dict,FastAPIConfig]
+    fastapi_config: Union[Dict, FastAPIConfig]
 
     def __init__(
         self,
@@ -81,7 +81,7 @@ class APICrud(APIRouter):
         page_size_max: int = 1000,
         debug: bool = False,
         actions: List[Actions] = ALL_ACTIONS,
-        fastapi_config: Optional[Union[Dict,FastAPIConfig]] = None,
+        fastapi_config: Optional[Union[Dict, FastAPIConfig]] = None,
     ):
         self.fastapi_config = fastapi_config or {}
         """
